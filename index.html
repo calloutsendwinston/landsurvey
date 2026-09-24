@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Calloutsend — Land Survey &amp; Property Development</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #16232E;
+    --brass: #A66B2E;
+    --brass-bright: #C98A3E;
+    --paper: #EFE9DA;
+    --paper-light: #F8F5EE;
+    --line: #D9CFB8;
+    --text: #1B2530;
+    --text-soft: #55606B;
+    --bg: var(--paper-light);
+    --surface: var(--paper);
+    --card-border: var(--line);
+    --font-display: 'Zilla Slab', Georgia, 'Times New Roman', serif;
+    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ink: #E7E1D2; --brass: #C98A3E;
+      --bg: #10171E; --surface: #16202A;
+      --text: #E9E4D8; --text-soft: #9AA4AC;
+      --card-border: #2A3843; --line: #26323C;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ink: #E7E1D2; --brass: #C98A3E;
+    --bg: #10171E; --surface: #16202A;
+    --text: #E9E4D8; --text-soft: #9AA4AC;
+    --card-border: #2A3843; --line: #26323C;
+  }
+  html { scroll-behavior: smooth; scroll-padding-top: env(safe-area-inset-top, 0px); }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font-family: var(--font-body); line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 28px; }
+  h1, h2, h3 { font-family: var(--font-display); font-weight: 600; margin: 0; letter-spacing: -0.01em; color: var(--ink); }
+
+  /* header */
+  header {
+    position: sticky; top: 0; top: env(safe-area-inset-top, 0px);
+    z-index: 10; background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(8px); border-bottom: 1px solid var(--card-border);
+  }
+  header .wrap { display: flex; align-items: center; justify-content: space-between; padding-top: 16px; padding-bottom: 16px; gap: 20px; flex-wrap: wrap; }
+  .brand { display: flex; align-items: center; gap: 10px; font-family: var(--font-display); font-size: 1.25rem; font-weight: 700; color: var(--ink); text-decoration: none; }
+  .brand svg { flex-shrink: 0; }
+  nav { display: flex; align-items: center; gap: 28px; flex-wrap: wrap; }
+  nav a { text-decoration: none; color: var(--text-soft); font-size: 0.95rem; }
+  nav a:hover { color: var(--brass); }
+  .btn {
+    display: inline-block; font-family: var(--font-body); font-weight: 600; font-size: 0.95rem;
+    padding: 11px 22px; border-radius: 3px; text-decoration: none; border: 1px solid transparent;
+    cursor: pointer; transition: transform .15s ease;
+  }
+  .btn:active { transform: scale(0.98); }
+  .btn-primary { background: var(--brass); color: #FFFBF3; }
+  .btn-primary:hover { background: var(--brass-bright); }
+  .btn-ghost { border-color: var(--card-border); color: var(--text); background: transparent; }
+  .btn-ghost:hover { border-color: var(--brass); }
+
+  /* hero */
+  .hero .wrap { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 56px; align-items: center; padding-top: 72px; padding-bottom: 72px; }
+  .hero h1 { font-size: clamp(2.1rem, 4.2vw, 3.4rem); line-height: 1.08; max-width: 15ch; }
+  .hero p.lede { font-size: 1.1rem; color: var(--text-soft); max-width: 46ch; margin: 22px 0 32px; }
+  .hero .actions { display: flex; gap: 14px; flex-wrap: wrap; }
+  .hero-art { background: var(--surface); border: 1px solid var(--card-border); border-radius: 4px; padding: 18px; }
+  .hero-art svg { width: 100%; height: auto; display: block; }
+
+  /* sections */
+  section { padding: 68px 0; border-top: 1px solid var(--card-border); }
+  section > .wrap > h2 { font-size: clamp(1.5rem, 2.6vw, 2rem); max-width: 22ch; }
+  section > .wrap > p.section-lede { color: var(--text-soft); max-width: 56ch; margin: 12px 0 40px; font-size: 1.02rem; }
+
+  .services-list { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border-top: 1px solid var(--card-border); }
+  .service-row { display: flex; gap: 16px; padding: 26px 22px; border-bottom: 1px solid var(--card-border); }
+  .service-row:nth-child(odd) { border-right: 1px solid var(--card-border); }
+  .service-row .icon { flex-shrink: 0; width: 34px; height: 34px; color: var(--brass); }
+  .service-row h3 { font-size: 1.05rem; margin-bottom: 6px; }
+  .service-row p { margin: 0; color: var(--text-soft); font-size: 0.95rem; }
+
+  .why-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px 40px; }
+  .why-item { display: flex; gap: 14px; align-items: flex-start; }
+  .why-item .mark { width: 8px; height: 8px; border-radius: 50%; background: var(--brass); margin-top: 8px; flex-shrink: 0; }
+  .why-item p { margin: 0; color: var(--text); }
+
+  /* contact */
+  #contact .wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; }
+  form { display: grid; gap: 14px; }
+  label { font-size: 0.88rem; color: var(--text-soft); display: block; margin-bottom: 6px; }
+  input, textarea {
+    width: 100%; font-family: var(--font-body); font-size: 0.98rem; color: var(--text);
+    background: var(--surface); border: 1px solid var(--card-border); border-radius: 3px;
+    padding: 11px 13px;
+  }
+  input:focus, textarea:focus, a:focus-visible, button:focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
+  textarea { resize: vertical; min-height: 100px; }
+  form button { justify-self: start; }
+  .contact-info { border-left: 1px solid var(--card-border); padding-left: 40px; }
+  .contact-info p { color: var(--text-soft); }
+  .contact-info .line { margin: 18px 0; }
+  .contact-info .line strong { display: block; color: var(--ink); font-size: 0.85rem; margin-bottom: 3px; }
+  #thanks { display: none; }
+  #thanks.show { display: block; }
+  #contact-form.hide { display: none; }
+
+  footer { border-top: 1px solid var(--card-border); padding: 32px 0; padding-bottom: calc(32px + env(safe-area-inset-bottom, 0px)); }
+  footer .wrap { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  footer p { margin: 0; color: var(--text-soft); font-size: 0.88rem; }
+
+  @media (max-width: 760px) {
+    .hero .wrap { grid-template-columns: 1fr; padding-top: 44px; padding-bottom: 44px; }
+    .services-list { grid-template-columns: 1fr; }
+    .service-row:nth-child(odd) { border-right: none; }
+    .why-grid { grid-template-columns: 1fr; }
+    #contact .wrap { grid-template-columns: 1fr; }
+    .contact-info { border-left: none; padding-left: 0; border-top: 1px solid var(--card-border); padding-top: 32px; }
+    nav { gap: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="brand" href="#top">
+      <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="13" cy="13" r="11.5" stroke="currentColor" stroke-width="1.4"/>
+        <path d="M13 4.5L15.3 11.5L22 13L15.3 14.5L13 21.5L10.7 14.5L4 13L10.7 11.5L13 4.5Z" fill="var(--brass)"/>
+      </svg>
+      Calloutsend
+    </a>
+    <nav>
+      <a href="#services">Services</a>
+      <a href="#why">Why us</a>
+      <a href="#contact" class="btn btn-primary">Request a callout</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero" style="border-top:none;">
+    <div class="wrap">
+      <div>
+        <h1>Every boundary, verified in the field.</h1>
+        <p class="lede">Calloutsend runs land survey and property development callouts for surveyors and realtors — accurate site data, delivered on your timeline.</p>
+        <div class="actions">
+          <a href="#contact" class="btn btn-primary">Request a callout</a>
+          <a href="#services" class="btn btn-ghost">See services</a>
+        </div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <svg viewBox="0 0 400 380" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="grid" width="26" height="26" patternUnits="userSpaceOnUse">
+              <path d="M26 0H0V26" fill="none" stroke="var(--line)" stroke-width="1"/>
+            </pattern>
+          </defs>
+          <rect width="400" height="380" fill="url(#grid)"/>
+          <line x1="30" y1="330" x2="230" y2="330" stroke="var(--text-soft)" stroke-width="1" stroke-dasharray="3 4"/>
+          <polygon points="80,300 132,78 306,104 262,318" fill="none" stroke="var(--brass)" stroke-width="2.2"/>
+          <g stroke="var(--ink)" stroke-width="1.2">
+            <line x1="72" y1="300" x2="88" y2="300"/><line x1="80" y1="292" x2="80" y2="308"/>
+            <line x1="124" y1="78" x2="140" y2="78"/><line x1="132" y1="70" x2="132" y2="86"/>
+            <line x1="298" y1="104" x2="314" y2="104"/><line x1="306" y1="96" x2="306" y2="112"/>
+            <line x1="254" y1="318" x2="270" y2="318"/><line x1="262" y1="310" x2="262" y2="326"/>
+          </g>
+          <g fill="var(--paper-light)" stroke="var(--ink)" stroke-width="1.4">
+            <circle cx="80" cy="300" r="5"/>
+            <circle cx="132" cy="78" r="5"/>
+            <circle cx="306" cy="104" r="5"/>
+            <circle cx="262" cy="318" r="5"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section id="services">
+    <div class="wrap">
+      <h2>What we handle</h2>
+      <p class="section-lede">Field work and paperwork, covered — from a single boundary check to a full development site.</p>
+      <div class="services-list">
+        <div class="service-row">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 6l2.2 5.2L19 13l-4.8 1.8L12 20l-2.2-5.2L5 13l4.8-1.8z"/></svg>
+          <div><h3>Boundary &amp; cadastral survey</h3><p>Precise property lines, corner monuments, and legal descriptions ready for title and closing.</p></div>
+        </div>
+        <div class="service-row">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 17c3-4 6-4 9 0s6 4 9 0"/><path d="M2 12c3-4 6-4 9 0s6 4 9 0"/><path d="M2 7c3-4 6-4 9 0s6 4 9 0"/></svg>
+          <div><h3>Topographic survey</h3><p>Elevation, grading, and site features mapped for design and permitting.</p></div>
+        </div>
+        <div class="service-row">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 21V9l8-5 8 5v12"/><path d="M9 21v-7h6v7"/></svg>
+          <div><h3>Property development support</h3><p>Feasibility, subdivision, and site planning from first callout to final plat.</p></div>
+        </div>
+        <div class="service-row">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+          <div><h3>Surveyor &amp; realtor callouts</h3><p>On-demand field crews for licensed surveyors and realtors who need extra capacity or a fast turnaround.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="why">
+    <div class="wrap">
+      <h2>Why property professionals call us</h2>
+      <div class="why-grid">
+        <div class="why-item"><span class="mark"></span><p>Licensed, field-tested crews on every job</p></div>
+        <div class="why-item"><span class="mark"></span><p>Digital plats and reports delivered within days</p></div>
+        <div class="why-item"><span class="mark"></span><p>One point of contact for your project, start to finish</p></div>
+        <div class="why-item"><span class="mark"></span><p>Flexible callouts — a single site or an ongoing partnership</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap">
+      <div>
+        <h2>Request a callout</h2>
+        <p class="section-lede">Tell us about the property and we'll get back to you with next steps.</p>
+        <form id="contact-form">
+          <div><label for="name">Name</label><input id="name" type="text" required></div>
+          <div><label for="email">Email</label><input id="email" type="email" required></div>
+          <div><label for="details">Property address / project details</label><textarea id="details" required></textarea></div>
+          <button type="submit" class="btn btn-primary">Send request</button>
+        </form>
+        <div id="thanks"><p><strong>Thanks — that's in.</strong> A member of the team will follow up shortly.</p></div>
+      </div>
+      <div class="contact-info">
+        <p>Prefer to talk it through first?</p>
+        <div class="line"><strong>Email</strong>calloutsend@proton.me</div>
+        <div class="line"><strong>Phone</strong>+254 792 697 171</div>
+        <div class="line"><strong>Coverage</strong>Surveyors, realtors, and developers — on-site and by callout</div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>© 2026 Calloutsend</p>
+    <p>Land survey &amp; property development</p>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('contact-form').addEventListener('submit', function(e){
+    e.preventDefault();
+    document.getElementById('contact-form').classList.add('hide');
+    document.getElementById('thanks').classList.add('show');
+  });
+</script>
+
+</body>
+</html>
